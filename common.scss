@@ -1,0 +1,17 @@
+body{
+    padding: 0;
+    min-width: 300px;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+@function px2rem($px){
+    $rem : 37.5px;
+    @return ($px/$rem) + rem;
+}
+
+// 设计稿2倍大时，比如750宽（iphone6 575x6670）
+@function px2rem($px){
+    $rem : 75px;
+    @return ($px/$rem) + rem;
+}
