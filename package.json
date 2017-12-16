@@ -6,7 +6,16 @@
   "author": "claude <xxs1992@foxmail.com>",
   "license": "MIT",
   "dependencies": {
+    "anyproxy": "^4.0.1",
     "excel": "^0.1.7",
-    "node-xlsx": "^0.10.0"
+    "koa": "^2.4.1",
+    "koa-body": "^2.5.0",
+    "koa-cors": "^0.0.16",
+    "koa-router": "^7.3.0",
+    "node-xlsx": "^0.10.0",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.13.0"
   }
 }

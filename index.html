@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <title>test</title>
 </head>
 <style>
@@ -29,10 +28,34 @@
         border: 1px black solid;
     }
 
+    #flext{
+        display: flex;
+        height: 300px;
+        background-color: #00bcd4;
+    }
+
 </style>
 <body>
 <div id="head"></div>
 <div id="test"></div>
+<div id="flext"></div>
+<div style="display: flex;align-items: flex-end">
+    <div style="flex: 1;background-color: red">
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+    </div>
+    <div style="flex: 3">
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
+    </div>
+</div>
 <script>
     var div = document.createElement('div');
     div.style.fontSize = '10px';
@@ -40,6 +63,16 @@
     txt += "<br>documentElement.clientWidth: " + document.documentElement.clientWidth;
     div.innerHTML = txt;
     document.body.appendChild(div);
+</script>
+<script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost:9000');
+    socket.on('news', function (data) {
+        console.log(data);
+        setTimeout(function () {
+            socket.emit('my other event', { my: Math.random() });
+        },2000)
+    });
 </script>
 </body>
 </html>
