@@ -29,8 +29,9 @@ socket.on('scroll', function (data) {
 });
 
 socket.on('url', function (data) {
-    alert(data.url);
-   window.location = data.url;
+    window.localStorage.localIndex = data.index;
+    if('total' in data) window.localStorage.total = data.total;
+    window.location = data.url;
 });
 
 socket.on('stopScroll',function (data) {

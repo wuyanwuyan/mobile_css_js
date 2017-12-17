@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>test</title>
     <link rel="stylesheet" href="http://www.cqaso.com/tempapi/css/bootstrap.min.css">
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js">
-    </script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
     <script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
 </head>
 <style>
@@ -21,28 +21,68 @@
         margin: 0;
     }
 
+    .text-ellipsis {
+        display: inline-block;
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
 </style>
 <body>
 <table class="table table-bordered table-sm">
     <thead class="thead-dark">
     <tr>
+        <th>#</th>
         <th>标题</th>
+        <th>same?</th>
+        <th>date</th>
+        <th>user</th>
+        <th>readNum</th>
+        <th>likeNum</th>
+        <th>url</th>
     </tr>
     </thead>
-
     <tbody>
     </tbody>
 </table>
+<script id="tmp" type="text/x-jquery-tmpl">
+    <tr>
+    <td>${index}</td>
+    <td class="text-nowrap" title="${otitle}">${title}</td>
+    <td class="text-nowrap" title="${activityName}">${same}</td>
+    <td>${postDate}</td>
+    <td>${postUser}</td>
+    <td>${readNum}</td>
+    <td>${likeNum}</td>
+    <td><a class="text-ellipsis" href="${ourl}" title="${ourl}" target="_blank">${ourl}</a></td>
+    </tr>
+</script>
 
-
-<script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
 <script>
+
+    function decodeHtml(html) {
+        var txt = document.createElement("textarea");
+        txt.innerHTML = html;
+        return txt.value;
+    }
+
+    function allCN(str) {
+        var reg = /[^\u4E00-\u9FA5]/g;
+        return str.replace(reg,'');
+    }
+
+    var index = 1;
+    var tmp = $('#tmp').html();
     var socket = io.connect('http://localhost:9000');
     socket.on('newData', function (data) {
-        var newHtml = '<tr><td class="text-nowrap">' + JSON.stringify(data) + '</td></tr>';
-        var t = $('tbody');
-        t.html(newHtml + t.html());
+        console.log(index, ' ', data);
+        data.index = index;
+        data.title = decodeHtml(data.otitle);
+        data.same = allCN(data.title) === allCN(data.activityName);
+        $.tmpl(tmp, data).appendTo("tbody");
+        index++;
     });
 
     socket.on('*', function (data) {

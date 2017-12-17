@@ -178,7 +178,6 @@ module.exports = {
             header['Cache-Control'] = 'no-cache, no-store, must-revalidate';
             newResponse.header = header;
 
-
             return {response: newResponse};
         }
 
@@ -191,7 +190,7 @@ module.exports = {
 function fetchListEnd_StartArticle() {
     console.log('final articles ', articles.length);
     globalSocket.emit('stopScroll', {});
-    globalSocket.emit('url', {url: articles[0].content_url, index: 0});
+    globalSocket.emit('url', {url: articles[0].content_url, index: 0,total:articles.length});
 }
 
 function resetData() {

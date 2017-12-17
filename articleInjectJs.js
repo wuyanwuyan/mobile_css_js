@@ -19,6 +19,8 @@ socket.on('news', function (data) {
 });
 
 socket.on('url', function (data) {
+    window.localStorage.localIndex = data.index;
+    if('total' in data) window.localStorage.total = data.total;
     window.location = data.url;
 });
 
@@ -60,8 +62,10 @@ var key = setInterval(function () {
             },
             datatype: 'json',
             success: function () {
+                var localIndex = window.localStorage.localIndex;
+                var total = window.localStorage.total;
                 clearInterval(key);
-                $('body').html("<label style='font-size: 30px;color:green'>提交成功</label>");
+                $('body').html("<label style='font-size: 30px;color:green'>提交成功 "+ (parseInt(localIndex)+1) + "/" + total + "</label>");
             },
             error: function () {
                 alert('提交失败');

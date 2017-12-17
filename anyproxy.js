@@ -14,6 +14,7 @@ const options = {
 const proxyServer = new AnyProxy.ProxyServer(options);
 
 proxyServer.on('ready', () => {
+    console.log('-------------------------- start --------------------------------')
 });
 proxyServer.on('error', (e) => {
 });
