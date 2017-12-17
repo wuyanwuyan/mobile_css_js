@@ -1,14 +1,15 @@
+
 var scrollSpeed = 0.6;
 var $scroll = $("html, body");
 function scrollBottom(callBack) {
     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
     var detalTop = $(document).height() - scrollTop;
-    $scroll.animate({scrollTop: $(document).height()}, detalTop / scrollSpeed);
+    $scroll.animate({scrollTop: $(document).height()}, 4000);
 };
 
 // $.post()
 
-var serverUrl = "http://10.0.1.180:9000";
+var serverUrl = "http://192.168.1.100:9000";
 var socket = io.connect(serverUrl);
 socket.on('news', function (data) {
     console.log(data);
@@ -21,21 +22,69 @@ socket.on('url', function (data) {
     window.location = data.url;
 });
 
+socket.on('end', function (data) {
+   alert('改公众号爬取完毕');
+});
+
 $(window).on('load', function () {
     scrollBottom();
 });
 
+var key = setInterval(function () {
+
+    // $("script").remove();
+    // $("#js_content").remove();
+    //
+    // // var innerhtml = $('body').html();
+    // // var index = innerhtml.lastIndexOf('投诉');
+    // // var ret = innerhtml.substr(index - 400, index + 400);
+
+    var readNum = $('#readNum3').text().trim();
+
+    if (readNum) {
+
+        var likeNum = $('#likeNum3').text().trim();
+        var postUser = $('#post-user').text().trim();
+        var postDate = $('#post-date').text().trim();
+        var activityName = $('#activity-name').text().trim();
+
+        $.ajax({
+            type: 'POST',
+            url: serverUrl + "/crawler",
+            data: {
+                readNum: readNum,
+                likeNum: likeNum,
+                postUser: postUser,
+                postDate: postDate,
+                activityName: activityName
+            },
+            datatype: 'json',
+            success: function () {
+                clearInterval(key);
+                $('body').html("<label style='font-size: 30px;color:green'>提交成功</label>");
+            },
+            error: function () {
+                alert('提交失败');
+            }
+        });
+    }
+}, 2000);
+
 setTimeout(function () {
     $.ajax({
         type: 'POST',
-        url: serverUrl + "/crawler",
-        data: JSON.stringify({a: 1}),
+        url: serverUrl + "/noData",
+        data: {
+            url: window.location.href,
+            title:$('#activity-name').text().trim()
+        },
         datatype: 'json',
         success: function () {
-            alert('提交成功');
+            alert('没有阅读数据？');
         },
         error: function () {
-            alert('提交失败');
+            alert('error 没有阅读数据？');
         }
     });
-}, 6000);
+},10000);
+

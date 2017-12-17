@@ -9,15 +9,13 @@ const options = {
     },
     throttle: 10000,
     forceProxyHttps: false,
-    silent: false
+    silent: true
 };
 const proxyServer = new AnyProxy.ProxyServer(options);
 
 proxyServer.on('ready', () => {
-    console.log('on read')
 });
 proxyServer.on('error', (e) => {
-    console.log('on error')
 });
 proxyServer.start();
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <link rel="stylesheet" href="http://www.cqaso.com/tempapi/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js">
+    </script>
+    <script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
+</head>
+<style>
+    html {
+        overflow: auto;
+    }
+
+    * {
+        box-sizing: content-box;
+    }
+
+    body {
+        margin: 0;
+    }
+
+
+</style>
+<body>
+<table class="table table-bordered table-sm">
+    <thead class="thead-dark">
+    <tr>
+        <th>标题</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    </tbody>
+</table>
+
+
+<script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost:9000');
+    socket.on('newData', function (data) {
+        var newHtml = '<tr><td class="text-nowrap">' + JSON.stringify(data) + '</td></tr>';
+        var t = $('tbody');
+        t.html(newHtml + t.html());
+    });
+
+    socket.on('*', function (data) {
+        console.log('----- ');
+    });
+</script>
+</body>
+</html>

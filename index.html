@@ -67,7 +67,7 @@
 <script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
 <script>
     var socket = io.connect('http://localhost:9000');
-    socket.on('news', function (data) {
+    socket.on('newData', function (data) {
         console.log(data);
         setTimeout(function () {
             socket.emit('my other event', { my: Math.random() });

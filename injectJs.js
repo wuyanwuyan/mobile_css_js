@@ -15,7 +15,7 @@ function scrollBottom(callBack) {
 };
 
 
-var socket = io.connect('http://10.0.1.180:9000');
+var socket = io.connect('http://192.168.1.100:9000');
 socket.on('news', function (data) {
     console.log(data);
     setInterval(function () {
@@ -29,6 +29,7 @@ socket.on('scroll', function (data) {
 });
 
 socket.on('url', function (data) {
+    alert(data.url);
    window.location = data.url;
 });
 
