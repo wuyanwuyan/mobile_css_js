@@ -8,12 +8,14 @@
   "dependencies": {
     "anyproxy": "^4.0.1",
     "excel": "^0.1.7",
+    "ip": "^1.1.5",
     "koa": "^2.4.1",
     "koa-body": "^2.5.0",
     "koa-cors": "^0.0.16",
     "koa-router": "^7.3.0",
     "koa2-cors": "^2.0.5",
     "node-xlsx": "^0.10.0",
+    "openurl": "^1.1.1",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
