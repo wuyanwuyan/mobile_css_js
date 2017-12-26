@@ -55,12 +55,13 @@ socket.on('connect', function () {
                     clearTimeout(timeoutKey);
                     $('#js_content').html("<label style='font-size: 30px;color:green'>提交成功 " + (parseInt(localIndex) + 1) + "/" + total + "</label>");
                 },
-                error: function () {
-                    alert('提交失败');
+                error: function (e) {
+                    // alert('提交失败');
+                    $('#js_content').html("<label style='font-size: 30px;color:green'>提交失败 " + e + "</label>");
                 }
             });
         }
-    }, 500);
+    },1000);
 
     var timeoutKey = setTimeout(function () {
         $.ajax({
@@ -72,10 +73,11 @@ socket.on('connect', function () {
             },
             datatype: 'json',
             success: function () {
-                alert('没有阅读数据？');
+                $('#js_content').html("<label style='font-size: 30px;color:green'>没有阅读数据 " + e + "</label>");
+                // alert('没有阅读数据？');
             },
             error: function () {
-                alert('error 没有阅读数据？');
+                // alert('error 没有阅读数据？');
             }
         });
     }, 10000);

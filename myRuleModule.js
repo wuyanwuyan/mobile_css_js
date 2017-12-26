@@ -9,6 +9,17 @@ var server = require('http').createServer(app.callback());
 var io = require('socket.io')(server);
 
 const router = new Router();
+
+// error handle
+app.use(async function (ctx, next) {
+    try {
+        await next();
+    } catch (e) {
+        console.log('error', e, ctx);
+        app.emit('error', e, ctx);
+    }
+});
+
 app.use(require('koa2-cors')());
 app.use(koaBody({multipart: true}));
 
@@ -24,8 +35,7 @@ router.post('/crawler', async (ctx, next) => {
     let newData = {
         article: articles[index],
         crawData: crawData
-    }
-    finalResult.push(newData);
+    };
 
     let showdata = Object.assign({}, {otitle: articles[index].title, ourl: articles[index].content_url,author:articles[index].author}, crawData);
     globalSocket.emit('newData', showdata);
@@ -49,6 +59,13 @@ router.post('/noData', async (ctx, next) => {
 
     console.log(' 没有爬取到？  ', crawData);
     console.log(' op没有爬取到？  ', articles[index].content_url);
+
+    index++;
+    if (articles[index]) {
+        globalSocket.emit('url', {url: articles[index].content_url, index: index});
+    } else {
+        globalSocket.emit('end', {});
+    }
 
     ctx.body = 'ok';
 });
