@@ -4,75 +4,15 @@
     <meta charset="UTF-8">
     <title>test</title>
 </head>
-<style>
-    html{
-        overflow: auto;
-    }
-    *{
-        box-sizing: content-box;
-    }
-    body{
-        margin: 0;
-    }
-    #head{
-        width: 100%;
-        height: 2rem;
-        margin-bottom: 2rem;
-        background-color: blue;
-    }
-    #test{
-        display: inline-block;
-        width: 100px;
-        height: 100px;
-        /*background-color: red;*/
-        border: 1px black solid;
-    }
-
-    #flext{
-        display: flex;
-        height: 300px;
-        background-color: #00bcd4;
-    }
-
-</style>
 <body>
-<div id="head"></div>
-<div id="test"></div>
-<div id="flext"></div>
-<div style="display: flex;align-items: flex-end">
-    <div style="flex: 1;background-color: red">
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-    </div>
-    <div style="flex: 3">
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-        <p>fasdfasdfasdfsdafkjsdklfjasklfjalf</p>
-    </div>
-</div>
+<a href="//www.baidu.com">helooo</a>
+<a href="//www.google.com">helooo</a>
 <script>
-    var div = document.createElement('div');
-    div.style.fontSize = '10px';
-    var txt = "devicePixelRatio: " + window.devicePixelRatio;
-    txt += "<br>documentElement.clientWidth: " + document.documentElement.clientWidth;
-    div.innerHTML = txt;
-    document.body.appendChild(div);
-</script>
-<script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
-<script>
-    var socket = io.connect('http://localhost:9000');
-    socket.on('newData', function (data) {
-        console.log(data);
-        setTimeout(function () {
-            socket.emit('my other event', { my: Math.random() });
-        },2000)
-    });
+    document.documentElement.addEventListener("click",function(e){
+        console.log(e.target.href);
+        e.preventDefault();
+        console.log("s1 捕获事件");
+    },true);
 </script>
 </body>
 </html>

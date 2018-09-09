@@ -9,18 +9,6 @@
     <script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
 </head>
 <style>
-    html {
-        overflow: auto;
-    }
-
-    * {
-        box-sizing: content-box;
-    }
-
-    body {
-        margin: 0;
-    }
-
     .text-ellipsis {
         display: inline-block;
         max-width: 100px;
@@ -28,7 +16,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
 </style>
 <body>
 <table class="table table-bordered table-sm">
@@ -64,13 +51,9 @@
     <td>${remark}</td>
     <td>${crawTime}</td>
     </tr>
-
-
 </script>
 
 <script>
-
-
     function decodeHtml(html) {
         var txt = document.createElement("textarea");
         txt.innerHTML = html;
