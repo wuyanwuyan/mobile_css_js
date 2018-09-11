@@ -1,9 +1,20 @@
 const Koa = require('koa');
-const app = new Koa();
 const http = require("http");
 // x-response-time
 
+
+const app = new Koa();
+
 const port = 3000;
+
+var readFileThunk = function(src) {
+    return new Promise(function (resolve, reject) {
+        fs.readFile(src, {'encoding': 'utf8'}, function (err, data) {
+            if(err) return reject(err);
+            resolve(data);
+        });
+    });
+}
 
 app.use(async (ctx, next) => {
     const start = Date.now();
@@ -22,6 +33,8 @@ app.use(async (ctx, next) => {
 });
 
 // response
+// app.use(KoaStatic('assets'));
+
 
 app.use(async (ctx, next) => {
     var options = {
@@ -32,9 +45,14 @@ app.use(async (ctx, next) => {
         headers: ctx.headers
     };
 
-    let res = await reqPromise(options);
+    let {res1,body} = await reqPromise(options);
 
-    ctx.body = res;
+    ctx.status = res1.statusCode;
+    for(var key in res1.headers) {
+        ctx.headers[key] = res1.headers[key];
+    }
+
+    ctx.body = body;
 
 
 })
@@ -53,7 +71,18 @@ app.listen(port, () => {
 var reqPromise = (options) => {
     return new Promise((resolve ,reject) => {
         var proxyReq = http.request(options, function(res1) {
-            resolve(res1)
+            // res1.setEncoding('utf8');
+            var body = [];
+            res1.on('data', (chunk) => {
+                body.push(chunk);
+                console.log('chunk ' ,chunk);
+            });
+            res1.on('end', () => {
+                resolve({
+                    res1,
+                    body: Buffer.concat(body)
+                });
+            });
         }).end();
     })
 }
